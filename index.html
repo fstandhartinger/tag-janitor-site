@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tag Janitor</title>
+<meta name="description" content="Audit every Zendesk ticket tag, see where each one is still used, then rename, merge or delete — with a confirmation that says what it cannot change.">
+<style>
+ body{margin:0;background:#fafbfc;color:#1c2430;font:17px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+ main{max-width:680px;margin:0 auto;padding:64px 22px 90px}
+ h1{font-size:34px;line-height:1.15;margin:0 0 10px}
+ .sub{font-size:19px;color:#4a5462;margin:0 0 34px}
+ h2{font-size:19px;margin:34px 0 8px}
+ p,li{color:#333c4a} li{margin-bottom:7px}
+ a{color:#0d6e63} .muted{color:#66707f;font-size:14px}
+ .tag{display:inline-block;background:#e5f2ef;color:#0d6e63;border-radius:5px;padding:2px 9px;font-size:13px;font-weight:600;margin-bottom:18px}
+ footer{margin-top:56px;border-top:1px solid #e3e7ec;padding-top:16px;font-size:14px;color:#66707f}
+ footer a{color:#4a5462}
+</style></head><body><main>
+<span class="tag">Zendesk Support app</span>
+<h1>Tag Janitor</h1>
+<p class="sub">Audit every ticket tag, see where each one is still used, then rename,
+merge or delete — with a confirmation that says what it cannot change.</p>
+
+<h2>Why it exists</h2>
+<p>Zendesk's own Tags page shows, in its own words, "the top 100 most used tags in the
+last two months". Tag Janitor reads every ticket through the incremental export, so it is
+capped at neither 100 tags nor 60 days. And before you delete anything, it tells you
+which triggers, automations, macros, views, SLA policies, ticket fields and organizations
+still reference the tag — because a rules-only view calls tags safe that are not.</p>
+
+<h2>What it does</h2>
+<ul>
+<li><strong>Inventory</strong> — every tag, its ticket count, closed-ticket share, last use, and what it is used in.</li>
+<li><strong>Reverse index</strong> — pick a rule and see its tags, including ticket field values and organization tags.</li>
+<li><strong>Duplicates</strong> — typo, case and separator variants clustered together.</li>
+<li><strong>Bulk rename, merge, delete</strong> — behind a dialog that states what will change, and what Zendesk will reject, before anything runs.</li>
+</ul>
+
+<h2>What it does not do</h2>
+<p>No backend, no account, no signup, no tracking. Pure HTML/JS inside the Zendesk App
+Framework — your data never leaves your Zendesk instance.
+Details in the <a href="/privacy.html">privacy policy</a>.</p>
+
+<footer>
+productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Passau, Germany ·
+<a href="/privacy.html">Privacy</a> · <a href="/imprint.html">Imprint</a> ·
+<a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>
+</footer>
+</main></body></html>
