@@ -179,6 +179,9 @@ function lum([r, g, b]) {
 }
 function ratio(a, b) { const [hi, lo] = [Math.max(lum(a), lum(b)), Math.min(lum(a), lum(b))]; return (hi + 0.05) / (lo + 0.05); }
 const css = read('assets/site.css');
+if (!css.includes('.nav li a.btn-primary,.nav li a.btn-primary:hover{color:var(--bg)}')) {
+  bad('a11y:nav-cta', 'header primary button must keep foreground text color on hover and at rest');
+}
 function palette(block) {
   const vars = {};
   for (const m of block.matchAll(/--([a-z0-9-]+):\s*#([0-9a-f]{6})/gi)) {
