@@ -38,6 +38,7 @@ code,kbd{font-family:var(--mono);font-size:.88em;background:var(--bg-2);border:1
 .nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;align-items:center}
 .nav li a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:8px 10px;border-radius:8px}
 .nav li a:hover{color:var(--text);background:var(--bg-2)}
+.nav li a.btn-primary,.nav li a.btn-primary:hover{color:var(--bg)}
 .nav .hide-sm{display:none}
 @media (min-width:720px){.nav .hide-sm{display:block}}
 
