@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Auditing Zendesk ticket tags: a full inventory | Tag Janitor</title>
+<meta name="description" content="The per-tag metrics that matter and how to build a full Zendesk tag inventory beyond the built-in top-100, 60-day view.">
+<link rel="canonical" href="https://tag-janitor.app.mintapis.com/guides/auditing-zendesk-ticket-tags/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tag Janitor">
+<meta property="og:title" content="How to audit Zendesk ticket tags — a full inventory beyond the top 100">
+<meta property="og:description" content="The metrics that matter per tag, the limits of the built-in tags page, and a method for a trustworthy full tag inventory.">
+<meta property="og:url" content="https://tag-janitor.app.mintapis.com/guides/auditing-zendesk-ticket-tags/">
+<meta property="og:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to audit Zendesk ticket tags">
+<meta name="twitter:description" content="Build a full, trustworthy tag inventory for cleanup decisions — beyond the built-in top-100 view.">
+<meta name="twitter:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta name="theme-color" content="#0a6a5e" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#0a0c0e" media="(prefers-color-scheme:dark)">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site.css">
+<script defer src="/analytics.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to audit Zendesk ticket tags: a full inventory beyond the top 100",
+  "description": "A practical method for auditing the full inventory of Zendesk ticket tags: per-tag metrics, the limits of the built-in tags page, and how to build a trustworthy inventory for cleanup decisions.",
+  "url": "https://tag-janitor.app.mintapis.com/guides/auditing-zendesk-ticket-tags/",
+  "datePublished": "2026-09-30",
+  "dateModified": "2026-09-30",
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "Tag Janitor", "url": "https://tag-janitor.app.mintapis.com/" },
+  "author": {
+    "@type": "Organization",
+    "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+    "url": "https://tag-janitor.app.mintapis.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+    "address": { "@type": "PostalAddress", "streetAddress": "Reichenbergerstr. 2", "postalCode": "94036", "addressLocality": "Passau", "addressCountry": "DE" }
+  },
+  "mainEntityOfPage": "https://tag-janitor.app.mintapis.com/guides/auditing-zendesk-ticket-tags/"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header solid">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Tag Janitor — home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" style="fill:var(--accent)"/><path style="fill:var(--accent-ink)" d="M8 9.5A1.5 1.5 0 0 1 9.5 8h6.38c.4 0 .78.16 1.06.44l7.12 7.12a1.5 1.5 0 0 1 0 2.12l-6.38 6.38a1.5 1.5 0 0 1-2.12 0L8.44 16.94A1.5 1.5 0 0 1 8 15.88z"/><circle cx="12.5" cy="12.5" r="1.7" style="fill:var(--accent)"/></svg>
+      Tag Janitor
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a class="hide-sm" href="/guides/">Guides</a></li>
+        <li><a class="hide-sm" href="/#faq">FAQ</a></li>
+        <li><a class="hide-sm" href="/privacy.html">Privacy</a></li>
+        <li><a class="hide-sm" href="/imprint.html">Imprint</a></li>
+        <li><a class="btn btn-primary" href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Get the app</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap narrow">
+    <div class="page-head">
+      <p class="crumbs"><a href="/">Home</a> / <a href="/guides/">Guides</a> / <span aria-current="page">Auditing ticket tags</span></p>
+      <h1>How to audit Zendesk ticket tags</h1>
+      <p class="lede">A tag audit is not a report on the busiest tags. It is an answer to a different question: for every tag in the instance, what is it worth, and what depends on it? Here is a method that produces an inventory you can actually act on.</p>
+      <p class="meta">Updated 30 September 2026 · ~8 min read</p>
+    </div>
+    <div class="prose">
+      <h2>Why the built-in tags page is not enough for an audit</h2>
+      <p>Zendesk's own Tags page shows, in its own words, "the top 100 most used tags in the last two months". That is a useful dashboard for the present — and a useless instrument for an audit, for two structural reasons:</p>
+      <ul>
+        <li><strong>The 100-tag cap.</strong> Most instances have more than 100 tags in real use, and far more in residue. An audit that stops at 100 rows by construction has already missed the long tail — which is exactly where stale, duplicate and forgotten tags live.</li>
+        <li><strong>The 60-day window.</strong> A tag that was heavily used a year ago and not since is the classic deletion candidate, and it will not appear in a "last two months" view. Recency cuts out precisely the data an audit needs most.</li>
+      </ul>
+      <p>The practical consequence: decisions made from the built-in page are decisions made from a filtered slice. The filter is reasonable for daily work and wrong for cleanup.</p>
+
+      <h2>The metrics that matter per tag</h2>
+      <p>For each tag, collect four numbers and one list. Together they separate the load-bearing tags from the residue:</p>
+      <ul>
+        <li><strong>Ticket count.</strong> How many tickets carry the tag. This tells you the blast radius of a rename or delete: renaming a tag on 4,000 tickets is a different risk profile than one on 3.</li>
+        <li><strong>Closed-ticket share.</strong> The percentage of those tickets that are closed. A high count with a near-100% closed share is historical baggage — safe in principle. A high count with many open or pending tickets is live plumbing — do not touch it without understanding what it drives.</li>
+        <li><strong>Last use.</strong> When a ticket last received the tag. Last use older than your longest business cycle (a quarter, or a year for seasonal support) is a strong staleness signal — but only a signal, never a verdict, because the tag may still be referenced by rules.</li>
+        <li><strong>Reference list.</strong> Which triggers, automations, macros, views, SLA policies, ticket field values and organizations still use the tag. This is the one metric that determines whether "delete" is even an option. See our guide on <a href="/guides/tags-referenced-by-triggers-views-macros/">tags referenced by triggers, views and macros</a>.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Rule of thumb:</strong> count + last use tells you <em>whether</em> to consider a tag. The reference list tells you <em>whether you may</em>. An audit without the reference list is a shopping list, not a safety check.</p>
+      </div>
+
+      <h2>Building the inventory: three sources, one table</h2>
+      <p>A complete inventory needs three kinds of data from your Zendesk instance:</p>
+      <ol>
+        <li><strong>Ticket tags at scale.</strong> The Tags API endpoint in the Zendesk API returns aggregated usage for tags (with the same kind of caps the UI has). For a full inventory you need the per-ticket picture: an export of tickets with their tag arrays. In the Zendesk App Framework this is done through the incremental ticket export, which pages through the whole history rather than a sample — that is how an app can report "every tag, every ticket" without leaving your instance.</li>
+        <li><strong>Rule definitions.</strong> Triggers, automations, macros, views and SLA policies are all available as objects with conditions. Their conditions mention tags as field conditions (for example <code>ticket.tag is &lt;tag&gt;</code>). Reading the definitions — not just the tickets — is the only way to find tags that outlive their tickets.</li>
+        <li><strong>Structural tag carriers.</strong> Ticket fields that hold tag-like values and organization tags. These are the two places people forget: a ticket field can carry a value that behaves like a tag, and an organization can carry tags that apply to all its tickets.</li>
+      </ol>
+      <p>The output is one row per tag:</p>
+      <pre><code>tag              count  closed  last use   used in
+billing          947    88%     2026-09-29 trigger "Bill VIP first", view "Open billing"
+vip-customer     1284   71%     2026-09-30 SLA "VIP response", macro "VIP greeting"
+vipcustomer      31     97%     2026-09-16 —
+vip customer     12     100%    2026-04-02 —
+legacy-migration 240    100%    2025-11-18 —</code></pre>
+      <p>Read the table the way an auditor reads it: the <code>vipcustomer</code> / <code>vip customer</code> rows are duplicate candidates (typo, case and separator drift), and <code>legacy-migration</code> looks deletable — but only if the reference column stays empty. If the same table is your source for <em>both</em> "what is stale" and "what is safe", cleanup decisions stop being guesswork.</p>
+
+      <h2>What to do with the finished inventory</h2>
+      <ul>
+        <li><strong>Group by intent, not by string.</strong> Tags are how agents encode meaning; duplicates are almost always the same meaning spelled differently. Cluster by meaning first (case, hyphens/underscores, spacing, obvious typos) and decide one canonical spelling per cluster.</li>
+        <li><strong>Separate the three buckets.</strong> Keep (referenced or recently used), merge (duplicate of a kept tag), delete (stale <em>and</em> unreferenced). Anything you cannot place is "investigate", and it stays that way — do not let an uncertain row become a delete by momentum.</li>
+        <li><strong>Date the snapshot.</strong> A tag inventory is a point-in-time object. Agents keep tagging; a new scan a month later can invalidate a decision. Re-scan before executing a cleanup, not just before planning it.</li>
+        <li><strong>Keep the reference list with the decision.</strong> When you delete a tag, the proof that it was safe is the empty reference list at that moment. For a small team that is a sentence in a ticket; for a big cleanup it is the audit trail.</li>
+      </ul>
+
+      <h2>How often</h2>
+      <p>Once at the start of a cleanup, then on a cadence that matches your tagging behavior: monthly for teams where agents still invent new tags freely, quarterly once a tagging convention exists. The goal of a recurring audit is not a shorter list of tags — it is a list where every tag has an owner and a reason to exist.</p>
+
+      <div class="callout">
+        <p><strong>Doing this in the app:</strong> Tag Janitor produces exactly this inventory inside your Zendesk instance — every tag with ticket count, closed-ticket share, last use and the rules that reference it, read through the incremental export and the rule definitions, with nothing leaving your instance. <a href="/">See how it works</a> or <a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">get the app from the Zendesk Marketplace</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap narrow related">
+    <h2>Related guides</h2>
+    <div class="guides" style="margin-top:20px">
+      <a class="guide-link" href="/guides/tags-referenced-by-triggers-views-macros/">
+        <h3>Tags referenced by triggers, views and macros</h3>
+        <p>How to find every rule that still points at a tag — before you rename or delete it.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+      <a class="guide-link" href="/guides/safe-bulk-tag-cleanup/">
+        <h3>Planning a safe bulk tag cleanup</h3>
+        <p>Sequence, batching, previewing and rollback for large rename/merge/delete campaigns.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <h2>Tag Janitor</h2>
+      <p>Audit every ticket tag, see where each one is still used, then rename, merge or delete — with a confirmation that says what it cannot change.</p>
+      <p><a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Zendesk Marketplace listing</a></p>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/guides/">Guides</a></li>
+        <li><a href="/guides/auditing-zendesk-ticket-tags/">Auditing ticket tags</a></li>
+        <li><a href="/guides/tags-referenced-by-triggers-views-macros/">Tags in triggers, views, macros</a></li>
+        <li><a href="/guides/safe-bulk-tag-cleanup/">Safe bulk tag cleanup</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+        <li><a href="/imprint.html">Imprint</a></li>
+        <li><a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+    <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Passau, Germany · <a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></p>
+  </div>
+</footer>
+</body>
+</html>

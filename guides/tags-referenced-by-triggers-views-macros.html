@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tags in triggers, views and macros: find rule references | Tag Janitor</title>
+<meta name="description" content="Where tag references hide — triggers, automations, macros, views, SLA policies, fields, organizations — and how to build the reverse index.">
+<link rel="canonical" href="https://tag-janitor.app.mintapis.com/guides/tags-referenced-by-triggers-views-macros/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tag Janitor">
+<meta property="og:title" content="Find every tag referenced by triggers, views and macros">
+<meta property="og:description" content="Where tag references hide in Zendesk, and how to build the tag-to-rule reverse index before deleting anything.">
+<meta property="og:url" content="https://tag-janitor.app.mintapis.com/guides/tags-referenced-by-triggers-views-macros/">
+<meta property="og:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tags referenced by triggers, views and macros">
+<meta name="twitter:description" content="Build the tag-to-rule reverse index before renaming or deleting any tag.">
+<meta name="twitter:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta name="theme-color" content="#0a6a5e" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#0a0c0e" media="(prefers-color-scheme:dark)">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site.css">
+<script defer src="/analytics.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Find every tag referenced by triggers, views and macros — before you delete it",
+  "description": "Where tag references hide in Zendesk — triggers, automations, macros, views, SLA policies, ticket fields, organizations — and how to build a tag-to-rule reverse index before renaming or deleting tags.",
+  "url": "https://tag-janitor.app.mintapis.com/guides/tags-referenced-by-triggers-views-macros/",
+  "datePublished": "2026-09-30",
+  "dateModified": "2026-09-30",
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "Tag Janitor", "url": "https://tag-janitor.app.mintapis.com/" },
+  "author": {
+    "@type": "Organization",
+    "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+    "url": "https://tag-janitor.app.mintapis.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+    "address": { "@type": "PostalAddress", "streetAddress": "Reichenbergerstr. 2", "postalCode": "94036", "addressLocality": "Passau", "addressCountry": "DE" }
+  },
+  "mainEntityOfPage": "https://tag-janitor.app.mintapis.com/guides/tags-referenced-by-triggers-views-macros/"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header solid">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Tag Janitor — home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" style="fill:var(--accent)"/><path style="fill:var(--accent-ink)" d="M8 9.5A1.5 1.5 0 0 1 9.5 8h6.38c.4 0 .78.16 1.06.44l7.12 7.12a1.5 1.5 0 0 1 0 2.12l-6.38 6.38a1.5 1.5 0 0 1-2.12 0L8.44 16.94A1.5 1.5 0 0 1 8 15.88z"/><circle cx="12.5" cy="12.5" r="1.7" style="fill:var(--accent)"/></svg>
+      Tag Janitor
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a class="hide-sm" href="/guides/">Guides</a></li>
+        <li><a class="hide-sm" href="/#faq">FAQ</a></li>
+        <li><a class="hide-sm" href="/privacy.html">Privacy</a></li>
+        <li><a class="hide-sm" href="/imprint.html">Imprint</a></li>
+        <li><a class="btn btn-primary" href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Get the app</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap narrow">
+    <div class="page-head">
+      <p class="crumbs"><a href="/">Home</a> / <a href="/guides/">Guides</a> / <span aria-current="page">Tags in rules</span></p>
+      <h1>Tags referenced by triggers, views and macros</h1>
+      <p class="lede">A tag can be gone from every ticket and still load-bearing: triggers, automations, macros, views and SLA policies keep referencing it by name. Here is where references hide, why a "rules-only" check still misses things, and how to build the reverse index that makes deletion safe.</p>
+      <p class="meta">Updated 30 September 2026 · ~8 min read</p>
+    </div>
+    <div class="prose">
+      <h2>Two lifecycles, one name</h2>
+      <p>A tag has a lifecycle on tickets and a lifecycle in rules, and they do not end together. The ticket lifecycle ends when the last ticket loses the tag; the rule lifecycle ends only when every rule stops naming it. In between, the tag is a ghost: zero recent tickets, but a trigger that is waiting for it, a view that filters on it, an SLA policy that escalates it.</p>
+      <p>Three consequences make the reverse index non-optional:</p>
+      <ul>
+        <li><strong>Renaming does not update rules.</strong> If you rename <code>vip-customer</code> to <code>vip</code>, the trigger condition still says <code>vip-customer</code>. It will simply stop matching — no error, no warning, and the behavior change is only visible when a ticket that should have matched does not.</li>
+        <li><strong>Deleting changes negative conditions too.</strong> A rule with <em>tag is not X</em> behaves differently after X is deleted: the condition becomes vacuously true for every ticket. Deleting a tag can therefore <em>change the behavior of rules that look nothing like the tag in question</em>.</li>
+        <li><strong>Views and macros are silent failure points.</strong> A view that filters on a dead tag quietly shows nothing; a macro whose condition names a dead tag quietly never applies. Neither tells you why.</li>
+      </ul>
+
+      <h2>Where tag references live in a Zendesk Support instance</h2>
+      <p>Work through this list, not just the obvious three:</p>
+      <ul>
+        <li><strong>Triggers</strong> — conditions like "when ticket has tag X". The most common reference, and the most expensive to break.</li>
+        <li><strong>Automations</strong> — same condition model as triggers, running on a schedule. Easy to forget because they fire quietly.</li>
+        <li><strong>Macros</strong> — conditions plus actions agents run with one click. A macro keyed on a tag you rename stops applying to tickets, and agents notice only as "the macro is missing".</li>
+        <li><strong>Views</strong> — filters that agents read all day. A view on a dead tag is a view that shows nothing.</li>
+        <li><strong>SLA policies</strong> — the least obvious place: escalation and breach timing can key on a tag. Break it and you change response-time behavior for a whole class of tickets.</li>
+        <li><strong>Ticket fields</strong> — custom fields whose <em>values</em> behave like tags. A text or dropdown field filled with "vip-customer" is a tag in all but name: nothing in the tag inventory will show it, and a tag cleanup that ignores it leaves half the work done.</li>
+        <li><strong>Organizations</strong> — organization-level tags that apply to all of an organization's tickets. They are easy to miss because they are not attached to any single ticket.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Why "rules-only" is not enough:</strong> a check that looks only at triggers and automations will call a tag "safe" when a view, an SLA policy, a ticket field or an organization tag still carries it. The reference check must cover all seven places, or the word "safe" is doing work the check did not earn.</p>
+      </div>
+
+      <h2>Building the reverse index</h2>
+      <p>The index maps each tag to the list of rules (and rule positions) that name it. Steps:</p>
+      <ol>
+        <li><strong>Export the rule definitions.</strong> In the Zendesk API, triggers, automations, macros, views and SLA policies are each listable endpoints; their conditions are structured data, not free text. In the App Framework the same reads happen through the framework client against your own instance.</li>
+        <li><strong>Collect tag-valued conditions.</strong> For each rule, walk the condition set and pick out every condition whose field is a tag field. Keep the operator — <em>is</em>, <em>is not</em>, <em>contains</em> — because, as above, negative references behave differently on deletion.</li>
+        <li><strong>Add the structural carriers.</strong> Ticket fields with tag-like values and organization tags join the same map, labelled as such so nobody mistakes "field value" for "tag on tickets".</li>
+        <li><strong>Join with the ticket inventory.</strong> A row per (tag, rule) pair, plus the tag's own ticket count and last use from your <a href="/guides/auditing-zendesk-ticket-tags/">tag audit</a>. Now each tag shows both its footprint on tickets and its footprint in rules.</li>
+      </ol>
+      <p>What you are looking for is the asymmetric row:</p>
+      <pre><code>tag              tickets(last 60d)   references
+legacy-migration  0                   SLA "Legacy migration breach"
+vip-customer      1284                 trigger "Bill VIP first", view "Open billing"
+ghost-tag         0                   trigger "Escalate ghost-tag"   ← orphaned rule</code></pre>
+      <ul>
+        <li><strong>Zero tickets, references present</strong> → the tag is kept alive by a rule that may itself be dead. Decide which to retire, not just the tag.</li>
+        <li><strong>Tickets present, no references</strong> → the safe merge/delete candidate, after the duplicate check.</li>
+        <li><strong>References to a tag absent from the inventory entirely</strong> → an orphaned rule: it has not matched since the tag vanished. This is the row most manual checks miss, and it is the cheapest cleanup win in the whole exercise.</li>
+      </ul>
+
+      <h2>Classify before you act</h2>
+      <p>Each reference has a different cost to fix. Classify them in this order:</p>
+      <ul>
+        <li><strong>Gate references</strong> (a rule only applies when the tag is present): renaming the tag requires updating the rule in the same change, or the rule dies.</li>
+        <li><strong>Action references</strong> (a rule adds or removes the tag): the rule keeps working, but it will start writing the old spelling again after a rename — the cleanup re-dirties itself. Update the action, or retire the rule.</li>
+        <li><strong>Negative references</strong> (is not / does not contain): do not delete the tag without re-reading the rule's intent. If the tag is gone from tickets, the rule is already misfiring; fixing that is a rule change, not a tag deletion.</li>
+      </ul>
+
+      <h2>A practical sequence</h2>
+      <ol>
+        <li>Build the reverse index for the tags you plan to touch — not just the whole instance, if that is too big; the campaign's scope is enough.</li>
+        <li>For every tag in the plan, read its reference list. Empty list: proceed to the <a href="/guides/safe-bulk-tag-cleanup/">cleanup plan</a>. Non-empty: each reference gets a decision (update the rule, update the tag, or retire the rule) <em>before</em> anything runs.</li>
+        <li>Apply rule updates and tag changes in one pass, in an order that keeps every rule valid at every step (see the <a href="/guides/safe-bulk-tag-cleanup/">bulk cleanup guide</a> for ordering and batching).</li>
+        <li>Re-run the index after the change. A correct cleanup ends with: no tag in the plan still referenced, and no rule referencing a tag that no longer exists.</li>
+      </ol>
+
+      <div class="callout">
+        <p><strong>Doing this in the app:</strong> Tag Janitor's reverse index covers all seven places — triggers, automations, macros, views, SLA policies, ticket field values and organization tags — in both directions: pick a rule and see its tags, or pick a tag and see every rule that names it. It runs inside your instance; nothing leaves it. <a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Get the app</a> · <a href="/">how it works</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap narrow related">
+    <h2>Related guides</h2>
+    <div class="guides" style="margin-top:20px">
+      <a class="guide-link" href="/guides/auditing-zendesk-ticket-tags/">
+        <h3>Auditing Zendesk ticket tags</h3>
+        <p>The per-tag metrics and the full inventory this reference check joins against.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+      <a class="guide-link" href="/guides/safe-bulk-tag-cleanup/">
+        <h3>Planning a safe bulk tag cleanup</h3>
+        <p>Ordering, batching and rollback once the references are known.</p>
+        <span class="go">Read the guide →</span>
+      </a>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <h2>Tag Janitor</h2>
+      <p>Audit every ticket tag, see where each one is still used, then rename, merge or delete — with a confirmation that says what it cannot change.</p>
+      <p><a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Zendesk Marketplace listing</a></p>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/guides/">Guides</a></li>
+        <li><a href="/guides/auditing-zendesk-ticket-tags/">Auditing ticket tags</a></li>
+        <li><a href="/guides/tags-referenced-by-triggers-views-macros/">Tags in triggers, views, macros</a></li>
+        <li><a href="/guides/safe-bulk-tag-cleanup/">Safe bulk tag cleanup</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+        <li><a href="/imprint.html">Imprint</a></li>
+        <li><a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+    <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Passau, Germany · <a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></p>
+  </div>
+</footer>
+</body>
+</html>
