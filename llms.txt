@@ -1,0 +1,29 @@
+# Tag Janitor
+
+Tag Janitor is a Zendesk Support app that audits the full inventory of ticket tags in a
+Zendesk instance — ticket count, closed-ticket share and last use for every tag, not just
+the top 100 of the last 60 days — shows which triggers, automations, macros, views, SLA
+policies, ticket fields and organizations still reference each tag, then renames, merges or
+deletes tags behind a preview that states what Zendesk will reject.
+
+The app has no backend, no account and no signup: it is pure HTML and JavaScript inside the
+Zendesk App Framework, and no helpdesk data leaves the customer's own Zendesk instance.
+
+## Pages
+
+- [Home](https://tag-janitor.app.mintapis.com/): what the app does, how it works, FAQ
+- [Guides](https://tag-janitor.app.mintapis.com/guides/): practical notes on Zendesk ticket tag hygiene
+- [Auditing Zendesk ticket tags](https://tag-janitor.app.mintapis.com/guides/auditing-zendesk-ticket-tags/): per-tag metrics and how to build a full tag inventory
+- [Tags referenced by triggers, views and macros](https://tag-janitor.app.mintapis.com/guides/tags-referenced-by-triggers-views-macros/): where tag references hide and how to build the tag-to-rule reverse index
+- [Planning a safe bulk tag cleanup](https://tag-janitor.app.mintapis.com/guides/safe-bulk-tag-cleanup/): ordering, batching, previews and rollback for large cleanups
+- [Privacy policy](https://tag-janitor.app.mintapis.com/privacy.html)
+- [Imprint](https://tag-janitor.app.mintapis.com/imprint.html)
+
+## Install
+
+Zendesk Marketplace listing: <https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/>
+
+## Contact
+
+info@productivity-boost.com — productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG,
+Reichenbergerstr. 2, 94036 Passau, Germany

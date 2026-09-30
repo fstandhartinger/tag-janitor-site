@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Tag Janitor — illustrative interface</title>
+  <desc id="desc">An illustrative tag inventory and review panel, with a clear note that the values are examples.</desc>
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#dfe2e3" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e3f1ee" stop-opacity=".84"/>
+      <stop offset="1" stop-color="#fbfbfa" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0e1216" flood-opacity=".12"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="#fbfbfa"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity=".56"/>
+  <path d="M0 0H850L560 630H0Z" fill="url(#wash)"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="66" y="58" width="38" height="38" rx="11" fill="#0a6a5e"/>
+    <rect x="73" y="67" width="24" height="20" rx="7" fill="#fff" opacity=".97"/>
+    <circle cx="80" cy="77" r="3" fill="#0a6a5e"/>
+    <text x="119" y="85" font-size="29" font-weight="700" fill="#0e1216">Tag Janitor</text>
+    <text x="304" y="84" font-size="19" font-weight="600" fill="#5b646e">Zendesk Support app</text>
+
+    <text x="68" y="206" font-size="64" font-weight="700" letter-spacing="-2.5" fill="#0e1216">The tag cleanup</text>
+    <text x="68" y="278" font-size="64" font-weight="700" letter-spacing="-2.5" fill="#0a6a5e">that checks its work.</text>
+    <text x="71" y="334" font-size="25" fill="#3b434c">Audit the full tag inventory. See what still uses each tag.</text>
+    <text x="71" y="369" font-size="25" fill="#3b434c">Review the impact before you rename, merge or delete.</text>
+
+    <g filter="url(#shadow)">
+      <rect x="70" y="421" width="1060" height="145" rx="18" fill="#fff" stroke="#e4e6e8"/>
+    </g>
+    <rect x="96" y="444" width="151" height="29" rx="14.5" fill="#e3f1ee" stroke="#aad2c9"/>
+    <text x="171.5" y="464" text-anchor="middle" font-size="13" font-weight="700" letter-spacing=".4" fill="#0a6a5e">ILLUSTRATIVE UI</text>
+    <text x="1097" y="464" text-anchor="end" font-size="15" font-weight="600" fill="#5b646e">Example values · not customer data</text>
+
+    <g font-family="Courier New, monospace" font-size="19" font-weight="600">
+      <rect x="98" y="491" width="202" height="43" rx="9" fill="#e3f1ee" stroke="#0a6a5e"/>
+      <text x="116" y="519" fill="#0a6a5e">vip-customer</text>
+      <rect x="316" y="491" width="127" height="43" rx="9" fill="#f4f5f3" stroke="#d6d9dc"/>
+      <text x="334" y="519" fill="#3b434c">billing</text>
+      <rect x="459" y="491" width="180" height="43" rx="9" fill="#f4f5f3" stroke="#d6d9dc"/>
+      <text x="477" y="519" fill="#5b646e" text-decoration="line-through">vipcustomer</text>
+    </g>
+    <path d="M676 512h58" stroke="#0a6a5e" stroke-width="2"/>
+    <path d="m727 505 8 7-8 7" fill="none" stroke="#0a6a5e" stroke-width="2"/>
+    <text x="755" y="507" font-size="15" font-weight="700" fill="#0e1216">PREVIEW CHANGES</text>
+    <text x="755" y="531" font-size="16" fill="#5b646e">rule references · Zendesk constraints</text>
+    <text x="1098" y="608" text-anchor="end" font-size="15" font-weight="600" fill="#5b646e">tag-janitor.app.mintapis.com</text>
+  </g>
+</svg>

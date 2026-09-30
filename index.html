@@ -1,48 +1,461 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tag Janitor</title>
-<meta name="description" content="Audit every Zendesk ticket tag, see where each one is still used, then rename, merge or delete — with a confirmation that says what it cannot change.">
-<style>
- body{margin:0;background:#fafbfc;color:#1c2430;font:17px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
- main{max-width:680px;margin:0 auto;padding:64px 22px 90px}
- h1{font-size:34px;line-height:1.15;margin:0 0 10px}
- .sub{font-size:19px;color:#4a5462;margin:0 0 34px}
- h2{font-size:19px;margin:34px 0 8px}
- p,li{color:#333c4a} li{margin-bottom:7px}
- a{color:#0d6e63} .muted{color:#66707f;font-size:14px}
- .tag{display:inline-block;background:#e5f2ef;color:#0d6e63;border-radius:5px;padding:2px 9px;font-size:13px;font-weight:600;margin-bottom:18px}
- footer{margin-top:56px;border-top:1px solid #e3e7ec;padding-top:16px;font-size:14px;color:#66707f}
- footer a{color:#4a5462}
-</style><script defer src="/analytics.js"></script>
-</head><body><main>
-<span class="tag">Zendesk Support app</span>
-<h1>Tag Janitor</h1>
-<p class="sub">Audit every ticket tag, see where each one is still used, then rename,
-merge or delete — with a confirmation that says what it cannot change.</p>
+<title>Tag Janitor — audit, rename, merge and delete Zendesk ticket tags</title>
+<meta name="description" content="Audit every Zendesk ticket tag, see which triggers, views and macros still reference it, then rename, merge or delete with a preview of what Zendesk will reject.">
+<link rel="canonical" href="https://tag-janitor.app.mintapis.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tag Janitor">
+<meta property="og:title" content="Tag Janitor — audit, rename, merge and delete Zendesk ticket tags safely">
+<meta property="og:description" content="See every ticket tag, where each one is still used by rules, then rename, merge or delete — with a preview of what Zendesk will reject.">
+<meta property="og:url" content="https://tag-janitor.app.mintapis.com/">
+<meta property="og:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tag Janitor — audit, rename, merge and delete Zendesk ticket tags safely">
+<meta name="twitter:description" content="See every ticket tag, where each one is still used by rules, then rename, merge or delete — with a preview of what Zendesk will reject.">
+<meta name="twitter:image" content="https://tag-janitor.app.mintapis.com/assets/og.png">
+<meta name="theme-color" content="#0a6a5e" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#0a0c0e" media="(prefers-color-scheme:dark)">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<script defer src="/analytics.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+  "legalName": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG",
+  "url": "https://tag-janitor.app.mintapis.com/",
+  "email": "info@productivity-boost.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Reichenbergerstr. 2",
+    "postalCode": "94036",
+    "addressLocality": "Passau",
+    "addressCountry": "DE"
+  },
+  "vatID": "DE296812612",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "info@productivity-boost.com",
+    "availableLanguage": ["en", "de"]
+  },
+  "knowsAbout": ["Zendesk Support", "ticket tags", "ticket hygiene", "triggers", "automations", "macros", "views", "SLA policies"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Tag Janitor",
+  "description": "A Zendesk Support app for auditing ticket tags, finding rule references, and reviewing safe cleanup changes.",
+  "category": "Zendesk Support app",
+  "brand": { "@type": "Brand", "name": "Tag Janitor" },
+  "image": "https://tag-janitor.app.mintapis.com/assets/og.png",
+  "url": "https://tag-janitor.app.mintapis.com/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tag Janitor",
+  "operatingSystem": "Zendesk Support",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Support and ticketing hygiene",
+  "description": "Audits the full inventory of ticket tags in a Zendesk Support instance — counts, closed-ticket share and last use for every tag — shows which triggers, automations, macros, views, SLA policies, ticket fields and organizations still reference each tag, then renames, merges or deletes tags behind a preview that states what Zendesk will reject.",
+  "url": "https://tag-janitor.app.mintapis.com/",
+  "installUrl": "https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/",
+  "screenshot": "https://tag-janitor.app.mintapis.com/assets/og.png",
+  "license": "https://tag-janitor.app.mintapis.com/privacy.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tag Janitor",
+  "url": "https://tag-janitor.app.mintapis.com/",
+  "publisher": { "@type": "Organization", "name": "productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is Tag Janitor different from Zendesk's own Tags page?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zendesk's Tags page shows, in its own words, the top 100 most used tags in the last two months. Tag Janitor reads the full ticket inventory through the incremental export, so it is capped at neither 100 tags nor 60 days. On top of that it shows where every tag is still referenced by triggers, automations, macros, views, SLA policies, ticket fields and organizations — the reference check Zendesk's tags UI does not give you."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Tag Janitor send my helpdesk data anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The app has no backend, no account and no signup. It is pure HTML and JavaScript inside the Zendesk App Framework: every request goes through Zendesk's own framework client to your own Zendesk instance. No helpdesk data is transmitted to the publisher or to any third party."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens before a rename, merge or delete runs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every change runs behind a preview dialog. It states which tags will change and what happens to each of them, and it lists the Zendesk constraints that will reject parts of the operation — for example tag length limits or invalid characters — before anything is sent. Nothing runs without that confirmation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which tag variants does it find?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tag Janitor clusters typo, case and separator variants of a tag together — for example 'vip-customer', 'Vip Customer' and 'vipcustomer' — so you can merge them into the spelling your agents actually use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does it know which rules reference a tag?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It reads the rule definitions from your own Zendesk instance — triggers, automations, macros, views, SLA policies, plus ticket field values and organization tags — and builds a reverse index from tag to the rules that use it. The check runs in your browser; no rule data leaves your instance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the app track me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The app contains no analytics, no tracking and no cookies of the publisher's. This public website is measured separately with a self-hosted, cookieless pageview counter that sends only a fixed page name and hostname; Do Not Track and Global Privacy Control stop it. Details in the privacy policy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What plans and roles can use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anyone with access to the Zendesk Marketplace can install Tag Janitor into their own Zendesk Support instance. Usage inside the instance is subject to your own Zendesk permissions: installing the app and running scans and changes require the access your Zendesk account grants for apps and tags. Pricing and terms of the Zendesk Marketplace apply."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Tag Janitor — home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" style="fill:var(--accent)"/><path style="fill:var(--accent-ink)" d="M8 9.5A1.5 1.5 0 0 1 9.5 8h6.38c.4 0 .78.16 1.06.44l7.12 7.12a1.5 1.5 0 0 1 0 2.12l-6.38 6.38a1.5 1.5 0 0 1-2.12 0L8.44 16.94A1.5 1.5 0 0 1 8 15.88z"/><circle cx="12.5" cy="12.5" r="1.7" style="fill:var(--accent)"/></svg>
+      Tag Janitor
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a class="hide-sm" href="/guides/">Guides</a></li>
+        <li><a class="hide-sm" href="/#faq">FAQ</a></li>
+        <li><a class="hide-sm" href="/privacy.html">Privacy</a></li>
+        <li><a class="hide-sm" href="/imprint.html">Imprint</a></li>
+        <li><a class="btn btn-primary" href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Get the app</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Zendesk Support app</p>
+        <h1 id="hero-title">The tag cleanup that <span class="soft">checks its work.</span></h1>
+        <p class="lede">Tag Janitor inspects your full ticket-tag inventory — every tag, not just the top 100 of the last 60 days — finds which triggers, automations, macros, views, SLA policies, fields and organizations still reference each tag, then renames, merges or deletes with a preview of what Zendesk will reject.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">
+            Get Tag Janitor on the Marketplace
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5H3.5v9h9v-3"/><path d="M9 2.5h4.5V7"/><path d="M13.5 2.5 7 9"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="/guides/">Read the guides</a>
+        </div>
+        <ul class="facts" aria-label="Key facts">
+          <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>No backend, no account, no signup</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>Pure HTML/JS in the App Framework</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>No helpdesk data leaves your instance</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="mock" role="img" aria-label="Illustrative Tag Janitor interface with example values, not customer data: a scan row reads vip-customer with 1,284 tickets and badges for a trigger, view and SLA; a duplicate cluster lists vipcustomer, Vip Customer and vip-customer; a confirmation dialog lists the rename, the rejected invalid tag and the trigger to fix first, with a Cancel / Apply safe changes button.">
+          <div class="mock-bar" aria-hidden="true">
+            <span class="lights"><i></i><i></i><i></i></span>
+            <span class="title">Tag Janitor — Support · your-helpdesk.zendesk.com</span>
+            <span class="mock-demo">Sample data</span>
+          </div>
+          <div class="mock-tabs" aria-hidden="true">
+            <span>Scan</span><span class="on">Inventory</span><span>Duplicates</span><span>Rules</span>
+          </div>
+          <div class="mock-body" aria-hidden="true">
+            <p class="cluster-h"><b>Scan complete</b><span>4,128 tickets · 312 tags</span></p>
+            <div class="rows">
+              <div class="row keep">
+                <span class="t"><span class="tagpill">vip-customer</span></span>
+                <span class="n">1,284 · 71% closed</span>
+              </div>
+              <div class="row keep">
+                <span class="t"><span class="tagpill">billing</span></span>
+                <span class="n">947 · 88% closed</span>
+              </div>
+              <div class="row merge">
+                <span class="t"><span class="tagpill">vipcustomer</span></span>
+                <span class="n">31 · last use 14d</span>
+              </div>
+            </div>
+            <p class="cluster-h" style="margin-top:14px"><b>Duplicate cluster</b><span>3 variants</span></p>
+            <div class="used" aria-hidden="true">
+              <span>vip-customer</span><span>vipcustomer</span><span>Vip Customer</span>
+            </div>
+            <div class="dialog">
+              <h3>Preview changes</h3>
+              <ul>
+                <li class="ok"><i>✓</i><span>Renaming <code>vipcustomer</code> → <code>vip-customer</code> · 31 tickets</span></li>
+                <li class="no"><i>✕</i><span><code>VIPEXPO!</code> rejected by Zendesk — the <code>!</code> character is not allowed in a ticket tag</span></li>
+                <li class="ref"><i>!</i><span>Trigger <b>Bill VIP first</b> still references the old tag — fix first</span></li>
+              </ul>
+              <div class="act">
+                <span>Cancel</span>
+                <span class="go">Apply safe changes</span>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="mock-cap">Illustrative preview of the app interface.</p>
+      </div>
+    </div>
+  </section>
 
-<h2>Why it exists</h2>
-<p>Zendesk's own Tags page shows, in its own words, "the top 100 most used tags in the
-last two months". Tag Janitor reads every ticket through the incremental export, so it is
-capped at neither 100 tags nor 60 days. And before you delete anything, it tells you
-which triggers, automations, macros, views, SLA policies, ticket fields and organizations
-still reference the tag — because a rules-only view calls tags safe that are not.</p>
+  <section class="section" id="problem" aria-labelledby="problem-title">
+    <div class="wrap">
+      <p class="kicker">The problem</p>
+      <h2 id="problem-title">Deleting a tag is one click. Untangling it is a project.</h2>
+      <p class="intro">Zendesk's own Tags page shows, in its own words, "the top 100 most used tags in the last two months". So the tag that has been sitting unused for a year is not on it — and the one that is quietly steering a trigger is easy to delete by accident.</p>
+      <div class="problem">
+        <div class="card">
+          <p class="label">Blind spot</p>
+          <h3>You cannot see what is left</h3>
+          <p>100 tags, 60 days. Everything beyond that — the long tail, the stale ones, the single-use ones — is invisible in the standard UI, so it accumulates.</p>
+        </div>
+        <div class="card">
+          <p class="label">Silent breakage</p>
+          <h3>Rules keep pointing at tags you deleted</h3>
+          <p>Triggers, automations, macros, views, SLA policies and ticket fields can all reference a tag. A rules-only view calls a tag "safe" that is not — and a broken rule fails quietly, in production, on a real ticket.</p>
+        </div>
+        <div class="card">
+          <p class="label">Duplicates</p>
+          <h3>Spelling drift splits your data</h3>
+          <p>Typo, case and separator variants — <code>vipcustomer</code>, <code>Vip Customer</code>, <code>vip-customer</code> — look like three tags and report like three. Counts split, rules miss, dashboards lie a little.</p>
+        </div>
+        <div class="card">
+          <p class="label">Bulk is the danger</p>
+          <h3>The bigger the cleanup, the higher the stakes</h3>
+          <p>Renaming 40 tags across thousands of tickets is exactly when a constraint — a tag too long, an invalid character, a reference you missed — costs you the most. You need the whole picture in one place, before anything runs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h2>What it does</h2>
-<ul>
-<li><strong>Inventory</strong> — every tag, its ticket count, closed-ticket share, last use, and what it is used in.</li>
-<li><strong>Reverse index</strong> — pick a rule and see its tags, including ticket field values and organization tags.</li>
-<li><strong>Duplicates</strong> — typo, case and separator variants clustered together.</li>
-<li><strong>Bulk rename, merge, delete</strong> — behind a dialog that states what will change, and what Zendesk will reject, before anything runs.</li>
-</ul>
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2 id="work-title">Inspect. See the references. Change safely.</h2>
+      <ol class="steps">
+        <li>
+          <h3>Scan the full inventory</h3>
+          <p>Tag Janitor reads every ticket through the incremental export — not the top 100 of 60 days. You get a row per tag: ticket count, closed-ticket share, last use, and what the tag is used in.</p>
+        </li>
+        <li>
+          <h3>Read the reverse index</h3>
+          <p>Pick any trigger, automation, macro, view, SLA policy, ticket field or organization and see its tags — including ticket field values and organization tags. Pick any tag and see everything that references it.</p>
+        </li>
+        <li>
+          <h3>Change with a preview</h3>
+          <p>Rename, merge or delete in bulk, behind a dialog that states what will change and what Zendesk will reject — constraints like tag length and invalid characters — before anything runs.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
 
-<h2>What it does not do</h2>
-<p>No backend, no account, no signup, no tracking. Pure HTML/JS inside the Zendesk App
-Framework — your data never leaves your Zendesk instance.
-Details in the <a href="/privacy.html">privacy policy</a>.</p>
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <p class="kicker">Capabilities</p>
+      <h2 id="features-title">Four views, one decision</h2>
+      <div class="features">
+        <div>
+          <h3><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 4h14v2H3zm0 4h14v2H3zm0 4h9v2H3zm0 4h6v2H3z"/></svg>Inventory</h3>
+          <p>Every tag in the instance: ticket count, closed-ticket share, last use, and where it is referenced. The long tail included — no 100-tag or 60-day cap.</p>
+        </div>
+        <div>
+          <h3><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M10 2a5 5 0 0 1 5 5c0 1.9-1 3.6-2.6 4.5l.6 3.5h-6l.6-3.5A5 5 0 0 1 10 2z"/></svg>Reverse index</h3>
+          <p>From rule to tags and from tag to rules. Triggers, automations, macros, views, SLA policies, ticket field values and organization tags — both directions.</p>
+        </div>
+        <div>
+          <h3><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4 5h7v2H4zm9 0h3v2h-3zM4 9h12v2H4zm0 4h12v2H4z"/></svg>Duplicates</h3>
+          <p>Typo, case and separator variants clustered together, with their ticket counts, so you merge into the spelling your agents actually use.</p>
+        </div>
+        <div>
+          <h3><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 3h5v5H3zm9 0h5v5h-5zM3 12h5v5H3zm9 0h5v5h-5z"/></svg>Bulk rename, merge, delete</h3>
+          <p>Apply changes across many tags at once — behind a preview that names what will change, what Zendesk will reject, and what to fix first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Passau, Germany ·
-<a href="/privacy.html">Privacy</a> · <a href="/imprint.html">Imprint</a> ·
-<a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>
+  <section class="section" id="trust" aria-labelledby="trust-title">
+    <div class="wrap">
+      <p class="kicker">Trust</p>
+      <h2 id="trust-title">Little machinery, on purpose</h2>
+      <div class="trust">
+        <div class="card">
+          <p class="label">How it works</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>Pure HTML and JavaScript inside the Zendesk App Framework</li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>Every request goes through Zendesk's own framework client to your own instance</li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 11.3 3.4 8.1l1.2-1.2 2 2 5.8-5.8 1.2 1.2z"/></svg>Scan results cached in your browser's local storage; clear it or rescan any time</li>
+          </ul>
+        </div>
+        <div class="card never">
+          <p class="label">Never</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m4.5 4.5 7 7m0-7-7 7"/></svg>No backend, no server of ours</li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m4.5 4.5 7 7m0-7-7 7"/></svg>No account, no signup, no credentials</li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m4.5 4.5 7 7m0-7-7 7"/></svg>No helpdesk data transmitted to the publisher or any third party</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <p class="label">Transparency</p>
+          <p>The <a href="/privacy.html">privacy policy</a> and <a href="/imprint.html">imprint</a> live on this site, the one the Marketplace listing points to.</p>
+          <p>The only measurement on these public pages is a self-hosted, cookieless pageview count that sends a fixed page name and hostname — no query strings, referrers or form contents — and it stops when Do Not Track or Global Privacy Control is set.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <p class="kicker">Install</p>
+      <h2 id="install-title">Three steps to a first scan</h2>
+      <div class="install">
+        <ol>
+          <li>Install Tag Janitor into your instance from the <a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Zendesk Marketplace</a>.</li>
+          <li>Open the app from a support tab and run a scan. It reads tickets and rules through your own Zendesk session — nothing else.</li>
+          <li>Read the inventory, check the reverse index, and apply only the changes you approve — each behind its preview.</li>
+        </ol>
+        <div>
+          <div class="card" style="margin:0">
+            <p class="label">In short</p>
+            <p>There is no onboarding, no key to exchange and no account to create before the first scan. The app reads, you review, you approve.</p>
+          </div>
+          <p class="note">Access inside the instance follows your own Zendesk permissions. Pricing and terms of the Zendesk Marketplace apply.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guides" aria-labelledby="guides-title">
+    <div class="wrap">
+      <p class="kicker">Guides</p>
+      <h2 id="guides-title">Practical notes on tag hygiene</h2>
+      <p class="intro">Short, practical walkthroughs for the decisions Tag Janitor is built around. Each one works without the app; the app is the version where you don't have to.</p>
+      <div class="guides">
+        <a class="guide-link" href="/guides/auditing-zendesk-ticket-tags/">
+          <h3>Auditing Zendesk ticket tags</h3>
+          <p>What "audit" should mean in practice: the right metrics per tag, and how to build a trustworthy inventory beyond the built-in tags page.</p>
+          <span class="go">Read the guide →</span>
+        </a>
+        <a class="guide-link" href="/guides/tags-referenced-by-triggers-views-macros/">
+          <h3>Tags referenced by triggers, views and macros</h3>
+          <p>How a tag lives on after the last ticket uses it — and a systematic way to find every rule that still points at it.</p>
+          <span class="go">Read the guide →</span>
+        </a>
+        <a class="guide-link" href="/guides/safe-bulk-tag-cleanup/">
+          <h3>Planning a safe bulk tag cleanup</h3>
+          <p>Sequence, batching, previewing and rolling back a large rename/merge/delete campaign without breaking live rules.</p>
+          <span class="go">Read the guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap narrow">
+      <p class="kicker">FAQ</p>
+      <h2 id="faq-title">Questions, answered plainly</h2>
+      <div class="faq">
+        <details>
+          <summary>How is Tag Janitor different from Zendesk's own Tags page?</summary>
+          <p>Zendesk's Tags page shows, in its own words, the top 100 most used tags in the last two months. Tag Janitor reads the full ticket inventory through the incremental export, so it is capped at neither 100 tags nor 60 days. On top of that it shows where every tag is still referenced by triggers, automations, macros, views, SLA policies, ticket fields and organizations — the reference check Zendesk's tags UI does not give you.</p>
+        </details>
+        <details>
+          <summary>Does Tag Janitor send my helpdesk data anywhere?</summary>
+          <p>No. The app has no backend, no account and no signup. It is pure HTML and JavaScript inside the Zendesk App Framework: every request goes through Zendesk's own framework client to your own Zendesk instance. No helpdesk data is transmitted to the publisher or to any third party.</p>
+        </details>
+        <details>
+          <summary>What happens before a rename, merge or delete runs?</summary>
+          <p>Every change runs behind a preview dialog. It states which tags will change and what happens to each of them, and it lists the Zendesk constraints that will reject parts of the operation — for example tag length limits or invalid characters — before anything is sent. Nothing runs without that confirmation.</p>
+        </details>
+        <details>
+          <summary>Which tag variants does it find?</summary>
+          <p>Tag Janitor clusters typo, case and separator variants of a tag together — for example 'vip-customer', 'Vip Customer' and 'vipcustomer' — so you can merge them into the spelling your agents actually use.</p>
+        </details>
+        <details>
+          <summary>How does it know which rules reference a tag?</summary>
+          <p>It reads the rule definitions from your own Zendesk instance — triggers, automations, macros, views, SLA policies, plus ticket field values and organization tags — and builds a reverse index from tag to the rules that use it. The check runs in your browser; no rule data leaves your instance.</p>
+        </details>
+        <details>
+          <summary>Does the app track me?</summary>
+          <p>No. The app contains no analytics, no tracking and no cookies of the publisher's. This public website is measured separately with a self-hosted, cookieless pageview counter that sends only a fixed page name and hostname; Do Not Track and Global Privacy Control stop it. Details in the <a href="/privacy.html">privacy policy</a>.</p>
+        </details>
+        <details>
+          <summary>What plans and roles can use it?</summary>
+          <p>Anyone with access to the Zendesk Marketplace can install Tag Janitor into their own Zendesk Support instance. Usage inside the instance is subject to your own Zendesk permissions: installing the app and running scans and changes require the access your Zendesk account grants for apps and tags. Pricing and terms of the Zendesk Marketplace apply.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <h2>Tag Janitor</h2>
+      <p>Audit every ticket tag, see where each one is still used, then rename, merge or delete — with a confirmation that says what it cannot change.</p>
+      <p><a href="https://www.zendesk.com/marketplace/apps/support/1288247/tag-janitor/" target="_blank" rel="noopener">Zendesk Marketplace listing</a></p>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="/guides/">Guides</a></li>
+        <li><a href="/guides/auditing-zendesk-ticket-tags/">Auditing ticket tags</a></li>
+        <li><a href="/guides/tags-referenced-by-triggers-views-macros/">Tags in triggers, views, macros</a></li>
+        <li><a href="/guides/safe-bulk-tag-cleanup/">Safe bulk tag cleanup</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+        <li><a href="/imprint.html">Imprint</a></li>
+        <li><a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+    <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Passau, Germany · <a href="mailto:info@productivity-boost.com">info@productivity-boost.com</a></p>
+  </div>
 </footer>
-</main></body></html>
+</body>
+</html>
